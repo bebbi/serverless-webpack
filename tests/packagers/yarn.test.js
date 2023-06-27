@@ -90,7 +90,7 @@ describe('yarn', () => {
         });
     });
 
-    it('should transform yarn trees to npm dependencies', () => {
+    it('should transform yarn classic trees to npm dependencies', () => {
       const testYarnResult =
         '{"type":"activityStart","data":{"id":0}}\n' +
         '{"type":"activityTick","data":{"id":0,"name":"bestzip@^2.1.5"}}\n' +
@@ -139,6 +139,39 @@ describe('yarn', () => {
       };
       Utils.spawnProcess.mockReturnValue(BbPromise.resolve({ stdout: testYarnResult, stderr: '' }));
       return expect(yarnModule.getProdDependencies('myPath', 1)).resolves.toEqual(expectedResult);
+    });
+
+    it('should transform yarn berry trees to npm dependencies', () => {
+      const testYarnResult =
+        '"bestzip@2.1.5"\n"bluebird@3.5.1"\n"fs-extra@4.0.3"\n"mkdirp@0.5.1"\n"@sls/webpack@1.0.0"';
+
+      const expectedResult = {
+        problems: [],
+        dependencies: {
+          bestzip: {
+            version: '2.1.5',
+            dependencies: {}
+          },
+          bluebird: {
+            version: '3.5.1',
+            dependencies: {}
+          },
+          'fs-extra': {
+            version: '4.0.3',
+            dependencies: {}
+          },
+          mkdirp: {
+            version: '0.5.1',
+            dependencies: {}
+          },
+          '@sls/webpack': {
+            version: '1.0.0',
+            dependencies: {}
+          }
+        }
+      };
+      Utils.spawnProcess.mockReturnValue(BbPromise.resolve({ stdout: testYarnResult, stderr: '' }));
+      return expect(yarnModule.getProdDependencies('myPath', 1, '3.0.0')).resolves.toEqual(expectedResult);
     });
 
     it('should reject on critical yarn errors', () => {
