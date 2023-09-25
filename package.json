@@ -1,7 +1,7 @@
 {
-  "name": "serverless-webpack",
+  "name": "@gigmade/serverless-webpack",
   "version": "5.11.0",
-  "description": "Serverless plugin to bundle your javascript with Webpack",
+  "description": "(@gigmade: for yarn berry) Serverless plugin to bundle your javascript with Webpack",
   "main": "index.js",
   "types": "index.d.ts",
   "author": "Frank Schmid <fschmid740@googlemail.com>",
